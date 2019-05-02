@@ -1,0 +1,13 @@
+[Unit]
+Description=Cerebro
+
+[Service]
+Type=simple
+User=cerebro
+Group=cerebro
+ExecStart=/opt/cerebro/bin/cerebro
+Restart=always
+WorkingDirectory=/
+
+[Install]
+WantedBy=multi-user.target

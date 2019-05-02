@@ -1,0 +1,4 @@
+logstash runtime error
+
+#sudo rm /etc/ssl/certs/java/cacerts
+#sudo update-ca-certificates -f

@@ -1,0 +1,76 @@
+
+---Setup Cerebro---
+
+sudo unzip /labs/cerebro-0.7.1.zip -d /opt
+
+sudo mv /opt/cerebro-0.7.1/ /opt/cerebro/
+
+Cerebro is now extracted into the /opt folder and ready to set up as a system service. To do this, you first should create a new Linux username to run the Cerebro service and assign ownership the installation folder to that account. Enter the following commands to make a service account for Cerebro and set the filesystem permissions so the cerebro account owns the folder it is installed in:
+
+sudo useradd cerebro
+sudo chown -R cerebro: /opt/cerebro/
+
+sudo cp /labs/1.2/files/cerebro.service /etc/systemd/system
+sudo systemctl daemon-reload
+sudo systemctl enable cerebro.service
+
+
+---start cerebro---
+sudo service cerebro start
+sudo service cerebro status
+
+---open cerebro---
+
+By default, Cerebro listens on port 9000, to confirm Cerebro has started, open Firefox and navigate to 
+http://localhost:9000
+
+If you see the Cerebro homepage, it has been successfully started. Enter http://localhost:9200 into the hosts box on the Cerebro login page and press Connect. Clicking the Connect button will connect you to the Elasticsearch node running on port 9200
+
+
+---Create an index template---
+
+Navigate to the more menu in Cerebro and select the "index templates" option.
+
+In the next screen, you should see the "Create new template" section.
+
+Enter "curator" as the name of the template. Modify the section below or cut and paste the text from the wiki so that it matches below: 
+
+{
+  "template": "logstash-curator-*",
+  "settings": {
+      "index.routing.allocation.require.box_type": "hot",
+      "index.number_of_shards": "2",
+      "index.number_of_replicas": "1"
+  },
+  "mappings": {},
+  "aliases": {}
+}
+
+Once the information is entered, press the Create button to make theindex template.
+
+---Create sample indices---
+
+Now, create some empty sample indices now to observe how Elasticsearch allocates shards across your 2 nodes. To create a new index, select the "more" drop-down in Cerebro and select "create index."
+
+Create the first index with a name of "test-0", you do not need to enter a number for shards or replicas since you have just defined it inside the "no_replicas" template.
+
+Press the "Create" button
+
+You should see a blue message saying "1 indices created". Next, repeat the process but name the index "test-1". The number of shards for this index was defined in the "one_replicas" template, so again, the number of shards boxes can stay blank.
+
+Press the "Create" button
+
+You should see another message saying the index was successfully created.
+
+Finally, make a third index named "logstash-curator-1" without specifying the number of shards or replicas, since this is defined in the "curator" template.
+
+Press the "Create" button
+
+This index is unique and will allocate shards differently than the "test-#" indices. This is because the naming convention matches the "logstash-curator-*" index pattern you designated in the previous step in the "curator" template. You will now check to verify the indices were created as expected.
+
+--- Check shard allocation---
+
+Now, clean up your test indices by deleting them from the cluster using the Cerebro interface. Perform the actions below for indices test-0 and test-1, but DO NOT delete index logstash-curator-1.
+
+To delete an index, click on the small triangle in the corner next to its name and click on the "delete index" option:
+
