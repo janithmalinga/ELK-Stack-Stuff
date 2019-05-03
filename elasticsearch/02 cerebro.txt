@@ -1,7 +1,7 @@
 
 ---Setup Cerebro---
 
-sudo unzip /labs/cerebro-0.7.1.zip -d /opt
+sudo unzip cerebro-0.7.1.zip -d /opt
 
 sudo mv /opt/cerebro-0.7.1/ /opt/cerebro/
 
