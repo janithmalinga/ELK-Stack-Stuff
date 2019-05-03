@@ -1,5 +1,5 @@
 Install Logstash
-sudo dpkg -i /labs/2.1/logstash-6.2.1.deb
+sudo dpkg -i logstash-6.2.1.deb
 
 Set Logstash to not start on boot
 systemctl is-enabled logstash.service
