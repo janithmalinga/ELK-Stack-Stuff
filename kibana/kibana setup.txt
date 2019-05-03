@@ -1,7 +1,7 @@
 
 ---Install Kibana
 
-sudo dpkg -i /labs/kibana-6.0.0-amd64.deb
+sudo dpkg -i kibana-6.0.0-amd64.deb
 
 To set Kibana to automatically start at boot at start it running, run the following commands:
 
