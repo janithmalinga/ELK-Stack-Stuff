@@ -1,4 +1,4 @@
-## Install elasticsearch--------
+## Install elasticsearch
 ```
 sudo dpkg -i elasticsearch-6.0.0.deb
 ```
